@@ -1,4 +1,19 @@
-# NeuroStudy Coach – minimal scaffold dependencies
-# Add sentence-transformers, faiss-cpu, pymupdf/pypdf when implementing those features.
+# NeuroStudy Coach – Dependencies
 
+# UI Framework
 streamlit>=1.28.0
+
+# Machine Learning & Data Processing
+pandas>=1.4.0
+numpy>=1.23
+scikit-learn>=1.0.0
+
+# Neural Networks (for academic project)
+torch>=2.0.0
+torchvision>=0.15.0
+matplotlib>=3.5.0
+
+# Future features (add when implementing):
+# sentence-transformers  # For learning materials search
+# faiss-cpu             # Vector database for RAG
+# pymupdf               # PDF processing
