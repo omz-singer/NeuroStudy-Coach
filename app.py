@@ -15,6 +15,7 @@ from src.ui.assignments import render_assignments_page
 from src.ui.schedule import render_schedule_page
 from src.ui.dashboard import render_dashboard_page
 from src.ui.profile import render_profile_page
+from src.ui.chatbot import render_chatbot_page
 
 # Initialise DB on startup
 init_db()
@@ -30,7 +31,7 @@ SECTION_OPTIONS = [
     "Progress Dashboard",
     "Assignments",
     "Study Schedule",
-    "Learning Materials",
+    "Study Assistant",
     "My Profile",
 ]
 
@@ -59,7 +60,7 @@ elif selected == "Assignments":
     render_assignments_page()
 elif selected == "Study Schedule":
     render_schedule_page()
-elif selected == "Learning Materials":
-    render_placeholder_section("Learning Materials", "Coming soon. Upload and search course materials here.")
+elif selected == "Study Assistant":
+    render_chatbot_page()
 elif selected == "My Profile":
     render_profile_page()

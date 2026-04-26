@@ -9,14 +9,25 @@ Falls back to cognitive-science baseline if no profile is set.
 
 import math
 from datetime import date, timedelta
+from pathlib import Path
 from typing import Optional
 
-# Import team's pacing module
+# Import team's pacing module — prefer neural network version
 try:
-    from src.scheduler.pacing import TimePredictor, BASELINE_MULTIPLIERS
+    from src.scheduler.pacing_nn import NeuralTimePredictor as TimePredictor
     PACING_AVAILABLE = True
+    USE_NEURAL = True
 except ImportError:
-    PACING_AVAILABLE = False
+    try:
+        from src.scheduler.pacing import TimePredictor
+        PACING_AVAILABLE = True
+        USE_NEURAL = False
+    except ImportError:
+        PACING_AVAILABLE = False
+        USE_NEURAL = False
+
+# Path to trained neural network model
+MODEL_PATH = Path(__file__).resolve().parent.parent / "data" / "best_model.pth"
 
 MAX_SESSIONS_PER_DAY = 4
 MIN_SESSION_MINS = 20
@@ -101,14 +112,16 @@ def _adjust_hours_with_predictor(
     profile: Optional[SimpleProfile],
 ) -> float:
     """
-    Use TimePredictor to adjust estimated hours based on ND profile.
-    Falls back to original est_hours if predictor unavailable.
+    Use NeuralTimePredictor (or fallback TimePredictor) to adjust estimated
+    hours based on ND profile. Falls back to original est_hours if unavailable.
     """
     if not PACING_AVAILABLE or profile is None:
         return float(assignment.get("est_hours", 2))
 
     try:
-        predictor = TimePredictor(profile)
+        # Pass trained model path so neural network is used if available
+        model_path = str(MODEL_PATH) if MODEL_PATH.exists() else None
+        predictor = TimePredictor(profile, model_path=model_path)
         simple_asn = SimpleAssignment(assignment)
         predicted_mins = predictor.predict_time(simple_asn)
         return predicted_mins / 60.0
