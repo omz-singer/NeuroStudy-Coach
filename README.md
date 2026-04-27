@@ -1,19 +1,34 @@
-# NeuroStudy Coach
+# 🧠 NeuroStudy Coach
 
-NeuroStudy Coach is a local, privacy-first study planning and learning support app for neurodivergent students. It will provide adaptive scheduling, pacing based on feedback, and a workspace for study materials—all running on your machine.
+AI-powered study planning for neurodivergent students. NeuroStudy Coach uses a PyTorch neural network to generate personalised study schedules based on your profile (ADHD, Autism, Dyslexia, Dyscalculia). All data stays on your machine.
 
-**Current state:** Initial scaffold only. The app runs a basic Streamlit interface with placeholder sections for Assignments, Study Schedule, Learning Materials, and Progress Dashboard. No scheduling, retrieval, or database logic is implemented yet.
+---
 
-## Setup
+## Getting Started
 
+### 1. Clone the repo
 ```bash
-python -m venv venv
-source venv/bin/activate   # Windows: venv\Scripts\activate
+git clone https://github.com/omz-singer/NeuroStudy-Coach
+cd NeuroStudy-Coach
+```
+
+### 2. Set up the environment
+```bash
+py -m venv venv
+source venv/Scripts/activate
 pip install -r requirements.txt
 ```
 
-## Run
+### 3. Add your API key (for the AI Study Assistant)
+Create a `.env` file in the project folder and add:
+```
+ANTHROPIC_API_KEY=your-key-here
+```
+Get a free key at https://console.anthropic.com
 
+### 4. Run the app
 ```bash
 streamlit run app.py
 ```
+
+The app will open in your browser at `http://localhost:8501`.
